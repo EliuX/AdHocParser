@@ -1,4 +1,4 @@
-module LocationParser(Identifier, Location, Point) where
+module LocationParser(Identifier, Location, Point, parseSRID, parsePoint, takeLocation) where
 
 import  AParser
 
@@ -8,12 +8,12 @@ type Identifier = Int
 -- Specify a location
 data Location = Location { locSRID  :: Identifier
                            ,locPoint :: Point   }
-                              deriving Show
+                           deriving (Show, Eq)
 
 -- 2D location point
 data Point = Point { pointX :: Float
                     ,pointY :: Float }
-                    deriving Show
+                    deriving (Show, Eq)
 
 
 data CantidateLog a = CantidateLog String
@@ -31,8 +31,8 @@ parseSRID _                       = Nothing
 
 -- Parses the Point
 parsePoint :: String -> Maybe Point
---parsePoint ('P':'O':'I':'N':'T':x) = takePoint  content
---                                     where content = map maybeFloat <$> splitIn ' ' <$> unWrap '[' ']' x
+parsePoint ('P':'O':'I':'N':'T':x) = takePoint content
+                                     where content = map maybeFloat . splitIn ' ' <$> unWrap '[' ']' x
 parsePoint _ = Nothing
 
 takeLocation :: Maybe Identifier -> Maybe Point -> Maybe Location
@@ -40,8 +40,8 @@ takeLocation Nothing _ = Nothing
 takeLocation _ Nothing = Nothing
 takeLocation (Just x) (Just y) = Just (Location x y)
 
-takePoint :: Maybe [Float] -> Maybe Point
-takePoint (Just [x, y]) = Just (Point x y)
+takePoint :: Maybe [Maybe Float] -> Maybe Point
+takePoint (Just [Just x, Just y]) = Just (Point x y)
 takePoint _ = Nothing
 
 parseLocation :: String -> Maybe Location
@@ -49,13 +49,15 @@ parseLocation x = takeLocation <$> parseSRID <*> parsePoint $ x
 
 -- Divide una candena en varios tokens a partir de un separador
 splitIn:: Char -> String -> [String]
-splitIn c text = [""]
+splitIn _ []  = []
+splitIn c str = before:(splitIn c (drop 1 left))
+       where (before, left) = break (==c) str
 
 -- converts to float
 maybeFloat :: String -> Maybe Float
-maybeFloat s = case (read s)::Either of
-   Right x -> Just x
-   Left _ -> Nothing
+maybeFloat s = case reads s of
+              [(x, "")] -> Just x
+              _ -> Nothing
 
 -- Removes the expected first and last item
 unWrap :: Char -> Char -> String -> Maybe String

@@ -1,6 +1,6 @@
 module Main where
 
-import Parser
+import LocationParser
 
 main::IO()
 main = do
