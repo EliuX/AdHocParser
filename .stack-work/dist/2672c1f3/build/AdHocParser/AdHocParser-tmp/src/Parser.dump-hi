@@ -1,0 +1,382 @@
+
+==================== FINAL INTERFACE ====================
+2016-03-21 02:52:58.2219441 UTC
+
+interface main@main:Parser 7103
+  interface hash: 4adffa4442f89f9179bfe871bf6d2429
+  ABI hash: ee4d5e287df01d5f4163fbbfc61b5012
+  export-list hash: d689da064320afcc66464a91ec892133
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 160cce87fe1edc10cde0ad05e2d1d4f9
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Parser.Identifier
+  Parser.Location
+  Parser.Point
+module dependencies:
+package dependencies: base-4.8.2.0* ghc-prim-0.4.0.0
+                      integer-gmp-1.0.0.0
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Monoid
+                         base-4.8.2.0:Data.Type.Equality base-4.8.2.0:GHC.Generics
+import  -/  base-4.8.2.0:Data.Functor 5c701b0af1708f0192a25dfe14ce6274
+import  -/  base-4.8.2.0:GHC.Base a4939789b2cfd60b36ed163e56a623cd
+import  -/  base-4.8.2.0:GHC.Show 0e1d8380a8fb0cfb07ebeda3b70cbf38
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  ghc-prim-0.4.0.0:GHC.Classes e1f4ff80f7b5262008a595d29986fb18
+c03fbbd03b35700fbb8c057028669956
+  $fShowLocation :: GHC.Show.Show Parser.Location
+  DFunId[0]
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Parser.Location
+                  Parser.$fShowLocation_$cshowsPrec
+                  Parser.$fShowLocation_$cshow
+                  Parser.$fShowLocation_$cshowList -}
+c03fbbd03b35700fbb8c057028669956
+  $fShowLocation1 :: Parser.Location -> GHC.Show.ShowS
+  {- Arity: 1,
+     Unfolding: (\ w :: Parser.Location ->
+                 case w of ww { Parser.Location ww1 ww2 ->
+                 Parser.$w$cshowsPrec 0 ww1 ww2 }) -}
+f31b185aca7d650c281f64501790fac9
+  $fShowLocation10 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0) -}
+5448dcce5481fb4ade1d35525f7becd7
+  $fShowLocation2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "}"#) -}
+c700d5941609e7d92c0bfe295207bab4
+  $fShowLocation3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "locPoint = "#) -}
+b89b13050517f978bd24cabc52c70c52
+  $fShowLocation4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# ", "#) -}
+e4d1b7a60bdef5311924c7a2fccfbf85
+  $fShowLocation5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "locSRID = "#) -}
+bf1db9d82a538bc8d29c7fa96ab09b0a
+  $fShowLocation6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Location {"#) -}
+c22c16cae707885d0ae0403da250685d
+  $fShowLocation7 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "pointY = "#) -}
+bd88e5a80cc5d08f6d38ae18102639d0
+  $fShowLocation8 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "pointX = "#) -}
+7767f8df512b37392302237abbe2abdf
+  $fShowLocation9 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Point {"#) -}
+c03fbbd03b35700fbb8c057028669956
+  $fShowLocation_$cshow :: Parser.Location -> GHC.Base.String
+  {- Arity: 1, Strictness: <S,1*U(U(U),1*U(1*U(U),1*U(U)))>,
+     Unfolding: InlineRule (1, True, False)
+                (\ x :: Parser.Location ->
+                 Parser.$fShowLocation_$cshowsPrec
+                   GHC.Show.shows18
+                   x
+                   (GHC.Types.[] @ GHC.Types.Char)) -}
+c03fbbd03b35700fbb8c057028669956
+  $fShowLocation_$cshowList :: [Parser.Location] -> GHC.Show.ShowS
+  {- Arity: 2,
+     Unfolding: (GHC.Show.showList__
+                   @ Parser.Location
+                   Parser.$fShowLocation1) -}
+c03fbbd03b35700fbb8c057028669956
+  $fShowLocation_$cshowsPrec ::
+    GHC.Types.Int -> Parser.Location -> GHC.Show.ShowS
+  {- Arity: 2,
+     Strictness: <S,1*U(U)><S,1*U(U(U),1*U(1*U(U),1*U(U)))>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ w :: GHC.Types.Int w1 :: Parser.Location ->
+                 case w of ww { GHC.Types.I# ww1 ->
+                 case w1 of ww2 { Parser.Location ww3 ww4 ->
+                 Parser.$w$cshowsPrec ww1 ww3 ww4 } }) -}
+12f9b6c53ff8018af2019d15edcdcbe4
+  $fShowParseToken ::
+    GHC.Show.Show a => GHC.Show.Show (Parser.ParseToken a)
+  DFunId[0]
+  {- Arity: 1, Strictness: <L,U(C(C1(U)),A,A)>m,
+     Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun: @ a $dShow :: GHC.Show.Show a.
+                  @ (Parser.ParseToken a)
+                  (Parser.$fShowParseToken_$cshowsPrec @ a $dShow)
+                  (Parser.$fShowParseToken_$cshow @ a $dShow)
+                  (Parser.$fShowParseToken_$cshowList @ a $dShow) -}
+c7f380d689500d6c5889148ad161799d
+  $fShowParseToken1 :: GHC.Show.ShowS
+  {- Arity: 1,
+     Unfolding: (GHC.Base.++
+                   @ GHC.Types.Char
+                   Parser.$fShowParseToken2) -}
+91029169f5af984d7a037067280c4d00
+  $fShowParseToken2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Invalid"#) -}
+44051562420789a254bc1d61b1073146
+  $fShowParseToken3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Token "#) -}
+ef91cb0adf6c9c7565bcfcf8c95979df
+  $fShowParseToken4 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 11) -}
+12f9b6c53ff8018af2019d15edcdcbe4
+  $fShowParseToken_$cshow ::
+    GHC.Show.Show a => Parser.ParseToken a -> GHC.Base.String
+  {- Arity: 2, Strictness: <L,1*U(1*C1(C1(C1(U))),A,A)><S,1*U>,
+     Unfolding: (\ @ a
+                   $dShow :: GHC.Show.Show a
+                   x :: Parser.ParseToken a ->
+                 case x of wild {
+                   Parser.Token b1
+                   -> GHC.Base.++
+                        @ GHC.Types.Char
+                        Parser.$fShowParseToken3
+                        (GHC.Show.showsPrec
+                           @ a
+                           $dShow
+                           Parser.$fShowParseToken4
+                           b1
+                           (GHC.Types.[] @ GHC.Types.Char))
+                   Parser.Invalid -> Parser.$fShowParseToken2 }) -}
+12f9b6c53ff8018af2019d15edcdcbe4
+  $fShowParseToken_$cshowList ::
+    GHC.Show.Show a => [Parser.ParseToken a] -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <L,U(C(C1(U)),A,A)><S,1*U><L,U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ @ a
+                   $dShow :: GHC.Show.Show a
+                   eta :: [Parser.ParseToken a]
+                   eta1 :: GHC.Base.String ->
+                 GHC.Show.showList__
+                   @ (Parser.ParseToken a)
+                   (Parser.$fShowParseToken_$cshowsPrec
+                      @ a
+                      $dShow
+                      Parser.$fShowLocation10)
+                   eta
+                   eta1) -}
+12f9b6c53ff8018af2019d15edcdcbe4
+  $fShowParseToken_$cshowsPrec ::
+    GHC.Show.Show a =>
+    GHC.Types.Int -> Parser.ParseToken a -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <L,1*U(1*C1(C1(U)),A,A)><L,1*U(U)><S,1*U>,
+     Unfolding: (\ @ a
+                   $dShow :: GHC.Show.Show a
+                   a1 :: GHC.Types.Int
+                   ds :: Parser.ParseToken a ->
+                 case ds of wild {
+                   Parser.Token b1
+                   -> case a1 of wild1 { GHC.Types.I# x ->
+                      let {
+                        g :: GHC.Base.String -> GHC.Base.String
+                        = GHC.Show.showsPrec @ a $dShow Parser.$fShowParseToken4 b1
+                      } in
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.>=# x 11) of wild2 {
+                        GHC.Types.False
+                        -> \ x1 :: GHC.Base.String ->
+                           GHC.Base.++ @ GHC.Types.Char Parser.$fShowParseToken3 (g x1)
+                        GHC.Types.True
+                        -> \ x1 :: GHC.Base.String ->
+                           GHC.Types.:
+                             @ GHC.Types.Char
+                             GHC.Show.shows9
+                             (GHC.Base.++
+                                @ GHC.Types.Char
+                                Parser.$fShowParseToken3
+                                (g (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x1))) } }
+                   Parser.Invalid -> Parser.$fShowParseToken1 }) -}
+8b2b99009aea411ed623f15e42c9cbca
+  $fShowPoint :: GHC.Show.Show Parser.Point
+  DFunId[0]
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Parser.Point
+                  Parser.$fShowPoint_$cshowsPrec
+                  Parser.$fShowPoint_$cshow
+                  Parser.$fShowPoint_$cshowList -}
+8b2b99009aea411ed623f15e42c9cbca
+  $fShowPoint1 :: Parser.Point -> GHC.Show.ShowS
+  {- Arity: 1,
+     Unfolding: (\ w :: Parser.Point ->
+                 case w of ww { Parser.Point ww1 ww2 ->
+                 Parser.$w$cshowsPrec1 0 ww1 ww2 }) -}
+8b2b99009aea411ed623f15e42c9cbca
+  $fShowPoint_$cshow :: Parser.Point -> GHC.Base.String
+  {- Arity: 1, Strictness: <S,1*U(1*U(U),1*U(U))>,
+     Unfolding: InlineRule (1, True, False)
+                (\ x :: Parser.Point ->
+                 Parser.$fShowPoint_$cshowsPrec
+                   GHC.Show.shows18
+                   x
+                   (GHC.Types.[] @ GHC.Types.Char)) -}
+8b2b99009aea411ed623f15e42c9cbca
+  $fShowPoint_$cshowList :: [Parser.Point] -> GHC.Show.ShowS
+  {- Arity: 2,
+     Unfolding: (GHC.Show.showList__
+                   @ Parser.Point
+                   Parser.$fShowPoint1) -}
+8b2b99009aea411ed623f15e42c9cbca
+  $fShowPoint_$cshowsPrec ::
+    GHC.Types.Int -> Parser.Point -> GHC.Show.ShowS
+  {- Arity: 2, Strictness: <S,1*U(U)><S,1*U(1*U(U),1*U(U))>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ w :: GHC.Types.Int w1 :: Parser.Point ->
+                 case w of ww { GHC.Types.I# ww1 ->
+                 case w1 of ww2 { Parser.Point ww3 ww4 ->
+                 Parser.$w$cshowsPrec1 ww1 ww3 ww4 } }) -}
+1b9e752b237c3f1db0616a7a7c0d422e
+  $w$cshowsPrec ::
+    GHC.Prim.Int#
+    -> Parser.Identifier -> Parser.Point -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <L,U><L,U(U)><L,1*U(1*U(U),1*U(U))>,
+     Inline: [0],
+     Unfolding: (\ ww :: GHC.Prim.Int#
+                   ww1 :: Parser.Identifier
+                   ww2 :: Parser.Point ->
+                 let {
+                   f :: GHC.Base.String -> GHC.Base.String
+                   = case ww2 of ww3 { Parser.Point ww4 ww5 ->
+                     Parser.$w$cshowsPrec1 0 ww4 ww5 }
+                 } in
+                 let {
+                   p :: GHC.Show.ShowS {- Arity: 1, Strictness: <L,1*U> -}
+                   = \ x :: GHC.Base.String ->
+                     GHC.Base.++
+                       @ GHC.Types.Char
+                       Parser.$fShowLocation6
+                       (GHC.Base.++
+                          @ GHC.Types.Char
+                          Parser.$fShowLocation5
+                          (case ww1 of ww3 { GHC.Types.I# ww4 ->
+                           case GHC.Show.$wshowSignedInt
+                                  0
+                                  ww4
+                                  (GHC.Base.++
+                                     @ GHC.Types.Char
+                                     Parser.$fShowLocation4
+                                     (GHC.Base.++
+                                        @ GHC.Types.Char
+                                        Parser.$fShowLocation3
+                                        (f (GHC.Base.++
+                                              @ GHC.Types.Char
+                                              Parser.$fShowLocation2
+                                              x)))) of ww5 { (#,#) ww6 ww7 ->
+                           GHC.Types.: @ GHC.Types.Char ww6 ww7 } }))
+                 } in
+                 case GHC.Prim.tagToEnum#
+                        @ GHC.Types.Bool
+                        (GHC.Prim.>=# ww 11) of wild {
+                   GHC.Types.False -> p
+                   GHC.Types.True
+                   -> \ x :: GHC.Base.String ->
+                      GHC.Types.:
+                        @ GHC.Types.Char
+                        GHC.Show.shows9
+                        (p (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x)) }) -}
+1af6940651b0885134abff9cc03f3b45
+  $w$cshowsPrec1 ::
+    GHC.Prim.Int#
+    -> GHC.Types.Float -> GHC.Types.Float -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <L,U><L,1*U(U)><L,1*U(U)>, Inline: [0],
+     Unfolding: (\ ww :: GHC.Prim.Int#
+                   ww1 :: GHC.Types.Float
+                   ww2 :: GHC.Types.Float ->
+                 let {
+                   f :: GHC.Base.String -> GHC.Base.String
+                   = case ww1 of ww3 { GHC.Types.F# ww4 ->
+                     GHC.Float.$w$sshowSignedFloat1
+                       GHC.Float.$fShowFloat_$sshowFloat
+                       Parser.$fShowLocation10
+                       ww4 }
+                 } in
+                 let {
+                   f1 :: GHC.Base.String -> GHC.Base.String
+                   = case ww2 of ww3 { GHC.Types.F# ww4 ->
+                     GHC.Float.$w$sshowSignedFloat1
+                       GHC.Float.$fShowFloat_$sshowFloat
+                       Parser.$fShowLocation10
+                       ww4 }
+                 } in
+                 let {
+                   p :: GHC.Show.ShowS {- Arity: 1, Strictness: <L,1*U> -}
+                   = \ x :: GHC.Base.String ->
+                     GHC.Base.++
+                       @ GHC.Types.Char
+                       Parser.$fShowLocation9
+                       (GHC.Base.++
+                          @ GHC.Types.Char
+                          Parser.$fShowLocation8
+                          (f (GHC.Base.++
+                                @ GHC.Types.Char
+                                Parser.$fShowLocation4
+                                (GHC.Base.++
+                                   @ GHC.Types.Char
+                                   Parser.$fShowLocation7
+                                   (f1 (GHC.Base.++ @ GHC.Types.Char Parser.$fShowLocation2 x))))))
+                 } in
+                 case GHC.Prim.tagToEnum#
+                        @ GHC.Types.Bool
+                        (GHC.Prim.>=# ww 11) of wild {
+                   GHC.Types.False -> p
+                   GHC.Types.True
+                   -> \ x :: GHC.Base.String ->
+                      GHC.Types.:
+                        @ GHC.Types.Char
+                        GHC.Show.shows9
+                        (p (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x)) }) -}
+34e2df62d45ebcb9ef913501a97315e3
+  type Identifier = GHC.Types.Int
+c03fbbd03b35700fbb8c057028669956
+  data Location
+    = Location {locSRID :: Parser.Identifier, locPoint :: Parser.Point}
+12f9b6c53ff8018af2019d15edcdcbe4
+  data ParseToken a = Token a | Invalid
+    Promotable
+8b2b99009aea411ed623f15e42c9cbca
+  data Point
+    = Point {pointX :: GHC.Types.Float, pointY :: GHC.Types.Float}
+997e521ac375e21257c1fdcd1fcd3307
+  locPoint :: Parser.Location -> Parser.Point
+  RecSel Parser.Location
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(LS),1*U(A,1*U(U,U))>,
+     Unfolding: InlineRule (1, True, False)
+                (\ ds :: Parser.Location ->
+                 case ds of wild { Parser.Location ds1 ds2 -> ds2 }) -}
+6f29d1b839cc34ae4780c34639772cc5
+  locSRID :: Parser.Location -> Parser.Identifier
+  RecSel Parser.Location
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(SL),1*U(1*U(U),A)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ ds :: Parser.Location ->
+                 case ds of wild { Parser.Location ds1 ds2 -> ds1 }) -}
+a80c06fc86eded4dd039306d4a41466e
+  pointX :: Parser.Point -> GHC.Types.Float
+  RecSel Parser.Point
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(SL),1*U(1*U(U),A)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ ds :: Parser.Point ->
+                 case ds of wild { Parser.Point ds1 ds2 -> ds1 }) -}
+f5f1c660a760eeec1b3d2170f8df6e83
+  pointY :: Parser.Point -> GHC.Types.Float
+  RecSel Parser.Point
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(LS),1*U(A,1*U(U))>,
+     Unfolding: InlineRule (1, True, False)
+                (\ ds :: Parser.Point ->
+                 case ds of wild { Parser.Point ds1 ds2 -> ds2 }) -}
+instance GHC.Show.Show [Parser.Location] = Parser.$fShowLocation
+instance GHC.Show.Show [Parser.ParseToken]
+  = Parser.$fShowParseToken
+instance GHC.Show.Show [Parser.Point] = Parser.$fShowPoint
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+
