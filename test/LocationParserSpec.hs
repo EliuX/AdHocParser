@@ -18,3 +18,17 @@ spec = do
   describe "parsePoint" $ do
     it "parses the Point of the location" $ do
       parsePoint "POINT 2 3" `shouldBe` Nothing
+      parsePoint "POINT(2 3)" `shouldBe` Just (Point 2 3) 
+  describe "parseLocation" $ do 
+    it "regular case of Location" $ do
+     parseLocation "SRID=2380;POINT(2 3)" `shouldBe` Just (Location { locSRID = 2380, locPoint = Point 2 3})     
+    it "The identifier should not accept negative numbers" $ do
+     parseLocation "SRID=-2380;POINT(2 3)" `shouldBe` Nothing
+    it "stric with boundaries" $ do 
+     parseLocation "[SRID=2380;POINT(2 3)" `shouldBe` Nothing
+     parseLocation "[SRID=2380;POINT(2 3)+" `shouldBe` Nothing
+     parseLocation "SRID=2380;POINT(2 3)]" `shouldBe` Nothing
+    it "accept negatives coordenate points" $ do
+     parseLocation "SRID=1234;POINT(-2 3.0)" `shouldBe` Just (Location { locSRID = 1234, locPoint = Point (-2) 3}) 
+    it "accept whitespaces on each segment" $ do
+     parseLocation "SRID=1234 ; POINT(-2 3.0)" `shouldBe` Just (Location { locSRID = 1234, locPoint = Point (-2) 3}) 
