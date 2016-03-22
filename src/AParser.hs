@@ -57,3 +57,20 @@ posInt = Parser f
 ------------------------------------------------------------
 -- Your code goes below here
 ------------------------------------------------------------
+
+
+instance Functor Parser where
+ fmap p (Parser xfunc) = Parser $ fmap (first p) . xfunc
+
+instance Applicative Parser where
+ -- pure x means that x is the parsed result value so the parameter of the Parser will be the reminder
+ pure x = Parser (\r -> Just (x, r))
+ Parser ab <*> Parser fa = Parser $ parseRestOf . prevParsed
+                           where
+                                prevParsed                 = runParser (Parser ab)
+                                parseRestOf (Just (fab,r)) = fmap (first fab) $ fa r
+                                parseRestOf Nothing        = Nothing
+
+-- Converts the parsed value a into b
+first :: (a -> b) -> (a,c) -> (b,c)
+first f (a,c) = (f a, c)

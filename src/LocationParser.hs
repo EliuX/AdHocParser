@@ -1,6 +1,8 @@
 module LocationParser(Identifier, Location(..), Point(..), parseSRID, parsePoint, parseLocation) where
 
-import Data.Char(isSpace)
+import Data.Char(isSpace, isDigit)
+import Data.List
+import AParser
 
 -- 32 or 64 bits Integer specifying the Id
 type Identifier = Int
@@ -13,72 +15,64 @@ data Location = Location { locSRID  :: Identifier
 -- 2D location point
 data Point = Point { pointX :: Float
                     ,pointY :: Float }
-                    deriving (Show, Eq)
+                     deriving (Show, Eq)
+
+-- make a Parser for an Identifier
+parseSRID :: Parser Identifier
+parseSRID = Parser f
+           where f ('S':'R':'I':'D':'=':xs)
+                   | null ns         = Nothing
+                   | otherwise       = case maybeValid ns of
+                                         Just floatValue -> Just (floatValue, skipWhiteSpaces . skipSeparator . skipWhiteSpaces $ rest)
+                                         _               -> Nothing
+                     where (ns, rest) = span isDigit xs
+                 f  _              = Nothing
+
+-- Make a Parser for Point
+parsePoint :: Parser Point
+parsePoint  = Parser f
+                     where f ('P':'O':'I':'N':'T':xs) = case unWrap '(' ')' xs of
+                                                         Just x -> runParser (Point <$> parseFloat <*> parseFloat) x
+                                                         _      -> Nothing
+                           f  _                       = Nothing
+
+-- Parses a location
+parseLocation :: Parser Location
+parseLocation = Location <$> parseSRID <*> parsePoint
+
+parseFloat:: Parser Float
+parseFloat = Parser f
+  where
+    f xs
+      | null ns   = Nothing
+      | otherwise = Just (read ns, skipWhiteSpaces rest)
+      where (ns, rest) = span (not . isSpace) xs
 
 
-data Token a = Token a
-               | Invalid
-               deriving Show
+-- Removes whitespaces at the edges
+trim :: String -> String
+trim = f . f
+        where f = reverse . skipWhiteSpaces
 
-class Box t where
-  unbox ::  t a -> Maybe a
+skipWhiteSpaces :: String -> String
+skipWhiteSpaces = dropWhile isSpace
 
-instance Box Token where
-  unbox (Token a) = Just a
-  unbox  _        = Nothing
+skipSeparator :: String -> String
+skipSeparator = dropWhile (==';')
 
 
---instance Functor CantidateLog where
---   fmap f (CantidateLog logText) = case f . takeWhile (/=';') $ logText of
---                                        Nothing ->
+-- Converts the parsed value a into b
+second :: (c -> b) -> (a,c) -> (a,b)
+second f (a,c) = (a, f c)
 
--- Parses de identifier
-parseSRID :: String -> Maybe Identifier
-parseSRID ('S':'R':'I':'D':'=':x) =   case maybeValid x of
-                                          Just (idVal)     -> if idVal > 1
-                                                              then Just idVal
-                                                              else Nothing  
-                                          _                 -> Nothing 
-parseSRID _                           = Nothing
-
--- Parses the Point
-parsePoint :: String -> Maybe Point
-parsePoint ('P':'O':'I':'N':'T':x) = takePoint content
-                                     where content = map maybeValid . words <$> unWrap '(' ')' x
-parsePoint _ = Nothing
-
-takeLocation :: Maybe Identifier -> Maybe Point -> Maybe Location
-takeLocation Nothing _ = Nothing
-takeLocation _ Nothing = Nothing
-takeLocation (Just x) (Just y) = Just (Location x y)
-
-takePoint :: Maybe [Maybe Float] -> Maybe Point
-takePoint (Just [Just x, Just y]) = Just (Point x y)
-takePoint _ = Nothing
-
--- Parsers the location by a given String, using parseSRID and parsePoint
-parseLocation :: String -> Maybe Location
-parseLocation text = takeLocation <$> parseSRID . head <*> parsePoint . last $ trim <$> splitIn ';' text
-
--- Divide una candena en varios tokens a partir de un separador
-splitIn:: Char -> String -> [String]
-splitIn _ []  = []
-splitIn c str = before: splitIn c (drop 1 left)
-       where (before, left) = break (==c) str
-
--- converts to float
+-- converts to requested element Maybe
 maybeValid :: (Read a) => String -> Maybe a
 maybeValid s = case reads s of
               [(x, "")] -> Just x
               _ -> Nothing
 
--- Removes the expected first and last item
+---- Removes the expected first and last item
 unWrap :: Char -> Char -> String -> Maybe String
 unWrap prefix suffix text = if head text == prefix && last text == suffix
                                 then Just . tail . init $ text
                                 else Nothing
-
--- Removes whitespaces at the edges
-trim :: String -> String
-trim = f . f
-   where f = reverse . dropWhile isSpace                                
