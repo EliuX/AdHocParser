@@ -2,7 +2,7 @@ name:                AdHocParser
 version:             1.0.0
 synopsis:            Learning how to Parse using Functors and Applicatives
 description:         Please see README.md
-homepage:            http://github.com/githubuser/cis194#readme
+homepage:            https://github.com/EliuX/AdHocParser#readme
 license:             BSD3 
 license-file:        LICENSE
 author:              Eliecer Hernandez
@@ -18,10 +18,11 @@ library
      -Wall
   hs-source-dirs:      src 
   exposed-modules:     LocationParser
-                       AParser
+                       ,FunctionsAndTypesForParsing
   ghc-options:         -Wall
   build-depends:       base     >= 4.7 && < 5
                        ,mtl
+                       ,parsec
   default-language:    Haskell2010
 
 test-suite specs
