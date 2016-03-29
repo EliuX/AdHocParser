@@ -46,7 +46,7 @@ Just ('x',"yz")
 
 -- For convenience, we've also provided a parser for positive
 -- integers.
-posInt :: Parser Integer
+posInt :: Parser Int
 posInt = Parser f
   where
     f xs
@@ -65,12 +65,22 @@ instance Functor Parser where
 instance Applicative Parser where
  -- pure x means that x is the parsed result value so the parameter of the Parser will be the reminder
  pure x = Parser (\r -> Just (x, r))
- Parser ab <*> Parser fa = Parser $ parseRestOf . prevParsed
+ Parser ab <*> Parser fa = Parser $ parseRestOf . runParser (Parser ab)
                            where
-                                prevParsed                 = runParser (Parser ab)
                                 parseRestOf (Just (fab,r)) = fmap (first fab) $ fa r
                                 parseRestOf Nothing        = Nothing
+
+-- Combines two parsers into one String Parser
+parseOrSkip :: (Show a, Show b) => Parser a -> Parser b -> Parser String
+pa `parseOrSkip` pb = (++) <$> (toString pa) <*> (toString pb)
+
+-- Converts one Parser into its String version
+toString :: (Show a, Functor b) => b a -> b String
+toString pa = (filter (\x -> x /='\'' && x /='\\' && x /='"' ) . show) <$> pa
 
 -- Converts the parsed value a into b
 first :: (a -> b) -> (a,c) -> (b,c)
 first f (a,c) = (f a, c)
+
+removeChar :: Char -> String -> String
+removeChar c xs = [ x | x <- xs, x /= c]

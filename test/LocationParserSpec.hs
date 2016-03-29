@@ -22,7 +22,7 @@ spec = do
     runParser (fmap ((++ " beautiful") . (++ " world")) simpleParser) "hello" `shouldBe` runParser ((++ " beautiful") <$> (++ " world") <$> (simpleParser)) "hello"
     runParser (fmap ((++ " beautiful") . (++ " world")) nullParser) "hello" `shouldBe` runParser ((++ " beautiful") <$> (++ " world") <$> nullParser) "hello"
   describe "Laws of Applicative Parser" $ do
-   it "pure id <*> v = v -- Identity" $ do
+   it "pure id <*> v = v -- Identity" $
     runParser (pure id <*> simpleParser) "sample" `shouldBe` runParser simpleParser "sample"
    it "pure f <*> pure x = pure (f x) -- Homomorphism" $ do
     runParser (pure ("Hola " ++) <*> pure " mundo") " resto" `shouldBe` runParser (pure (("Hola " ++) " mundo")) " resto"
@@ -30,24 +30,24 @@ spec = do
     runParser (pure ("Hola" ++) <*> pure " mundo") " resto" `shouldBe` runParser (pure ($ " mundo") <*> pure ("Hola" ++)) " resto"
    it "pure (.) <*> u <*> v <*> w = u <*> (v <*> w) -- Composition" $ do
     runParser (pure (.) <*> pure ("Hola " ++) <*> pure ("cruel " ++) <*> pure " mundo") " resto" `shouldBe` runParser (pure ("Hola " ++) <*> (pure ("cruel " ++) <*> pure " mundo")) " resto"
-  describe "parseSRID" $ do
+  describe "parseSRID" $
    it "parses the SRID of the location" $ do
     runParser parseSRID "SRID=2380" `shouldBe` Just (2380,"")
     runParser parseSRID "SRID2380"  `shouldBe` Nothing
-  describe "parsePoint" $ do
+  describe "parsePoint" $
     it "parses the Point of the location" $ do
       runParser parsePoint "POINT 2 3" `shouldBe` Nothing
-      runParser parsePoint "POINT(2 3)" `shouldBe` Just (Point 2 3, "")
+      runParser parsePoint "POINT(2.0 3)" `shouldBe` Just (Point 2 3, "")
   describe "parseLocation" $ do
-    it "regular case of Location" $ do
+    it "regular case of Location" $
       runParser parseLocation "SRID=2380;POINT(2 3)" `shouldBe` Just (Location { locSRID = 2380, locPoint = Point 2 3}, "")
-    it "The identifier should not accept negative numbers" $ do
+    it "The identifier should not accept negative numbers" $
       runParser parseLocation "SRID=-2380;POINT(2 3)" `shouldBe` Nothing
-    it "stric with boundaries" $ do
+    it "accept valid values at the beginning" $ do
       runParser parseLocation "[SRID=2380;POINT(2 3)" `shouldBe` Nothing
       runParser parseLocation "[SRID=2380;POINT(2 3)+" `shouldBe` Nothing
-      runParser parseLocation "SRID=2380;POINT(2 3)]" `shouldBe` Nothing
-    it "accept negatives coordenate points" $ do
+      runParser parseLocation "SRID=2380;POINT(2 3)]" `shouldBe` Just (Location { locSRID = 2380, locPoint = Point 2 3}, "]")
+    it "accept negatives coordenate points" $
       runParser parseLocation "SRID=1234;POINT(-2 3.0)" `shouldBe` Just (Location { locSRID = 1234, locPoint = Point (-2) 3}, "")
-    it "accept whitespaces on each segment" $ do
-      runParser parseLocation "SRID=1234 ; POINT(-2 3.0)" `shouldBe` Just (Location { locSRID = 1234, locPoint = Point (-2) 3}, "")
+    it "do not accept whitespaces on each segment" $ do
+      runParser parseLocation "SRID=1234 ; POINT(-2 3.0)" `shouldBe` Nothing
