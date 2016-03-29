@@ -24,20 +24,11 @@ data Point = Point { pointX :: Float
 
 -- make a Parser for an Identifier
 parseSRID :: Parser Identifier
-parseSRID = do
-    void $ string "SRID="
-    identifier <- many1 digit
-    return (read identifier)
+parseSRID = read <$> (string "SRID=" *> many1 digit)
 
 -- Make a Parser for Point
 parsePoint :: Parser Point
-parsePoint = do
-      void $ string "POINT("
-      p1 <- takeFloatNum
-      atLeastOneWhiteSpace
-      p2 <- takeFloatNum
-      void $ char ')'
-      return (Point p1 p2)
+parsePoint = Point <$> (string "POINT(" *> takeFloatNum) <*> (char ' ' *> takeFloatNum <* char ')')
 
 parseLocation :: Parser Location
 parseLocation = Location <$> parseSRID <* expectSeparator <*> parsePoint
@@ -45,18 +36,9 @@ parseLocation = Location <$> parseSRID <* expectSeparator <*> parsePoint
 
 ------- Complementary functions -------
 
--- Requires at least one whitespace
-atLeastOneWhiteSpace :: Parser ()
-atLeastOneWhiteSpace = void $ some $ oneOf " \n\t"
-
 -- Expects a coma delimiting and some whitespaces
 expectSeparator :: Parser ()
-expectSeparator = do
-      void spaces
-      void $ char ';'
-      void spaces
+expectSeparator =  spaces <* char ';' <* spaces
 
 takeFloatNum :: Parser Float
-takeFloatNum = do
-            val <- many $ satisfy (\a -> isDigit a || a == '-' || a == '.')
-            return (read val)
+takeFloatNum = read <$> (many $ satisfy (\a -> isDigit a || a == '-' || a == '.'))
